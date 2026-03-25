@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Romil Patel — Interview Prep Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0d12;
+    --surface: #111520;
+    --surface2: #161c2a;
+    --border: #1e2a3d;
+    --accent: #00d4aa;
+    --accent2: #7b61ff;
+    --accent3: #ff6b6b;
+    --accent4: #f5a623;
+    --text: #e8edf5;
+    --muted: #6b7c99;
+    --card: #131926;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  /* Header */
+  header {
+    background: linear-gradient(135deg, #0d1421 0%, #111d2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(20px);
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .logo-icon { width: 38px; height: 38px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; color: #000; }
+  .logo-text { font-size: 18px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+  .logo-sub { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+  .progress-bar-wrap { display: flex; align-items: center; gap: 10px; }
+  .progress-label { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  #progress-count { color: var(--accent); font-weight: 700; }
+  .progress-track { width: 120px; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+
+  /* Layout */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  
+  /* Nav Tabs */
+  .nav-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 36px; background: var(--surface); padding: 6px; border-radius: 14px; border: 1px solid var(--border); }
+  .nav-tab { padding: 10px 20px; border-radius: 10px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.2s; white-space: nowrap; }
+  .nav-tab:hover { color: var(--text); background: var(--border); }
+  .nav-tab.active { background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #fff; }
+
+  /* Sections */
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Section title */
+  .section-title { font-size: 28px; font-weight: 800; margin-bottom: 6px; letter-spacing: -1px; }
+  .section-sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; font-family: 'JetBrains Mono', monospace; }
+  
+  /* Resume Polish */
+  .polish-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  .polish-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; position: relative; overflow: hidden; }
+  .polish-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .polish-card.good::before { background: var(--accent); }
+  .polish-card.improve::before { background: var(--accent4); }
+  .polish-card.add::before { background: var(--accent2); }
+  .polish-tag { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tag-good { background: rgba(0,212,170,0.15); color: var(--accent); }
+  .tag-improve { background: rgba(245,166,35,0.15); color: var(--accent4); }
+  .tag-add { background: rgba(123,97,255,0.15); color: var(--accent2); }
+  .polish-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .polish-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .polish-desc strong { color: var(--text); }
+  .polish-change { margin-top: 10px; background: var(--surface2); border-radius: 8px; padding: 10px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; }
+  .del { color: #ff6b6b; text-decoration: line-through; }
+  .ins { color: var(--accent); }
+
+  /* Concept Cards */
+  .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .concept-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
+  .concept-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .concept-header { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .concept-header-left { display: flex; align-items: center; gap: 12px; }
+  .concept-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .concept-name { font-size: 15px; font-weight: 700; }
+  .concept-cat { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+  .concept-chevron { color: var(--muted); font-size: 16px; transition: transform 0.3s; flex-shrink: 0; }
+  .concept-card.open .concept-chevron { transform: rotate(180deg); }
+  .concept-body { display: none; padding: 0 20px 18px; border-top: 1px solid var(--border); }
+  .concept-card.open .concept-body { display: block; }
+  .concept-desc { font-size: 13px; color: #b0bdd0; line-height: 1.7; margin-top: 14px; }
+  .concept-points { margin-top: 12px; display: flex; flex-direction: column; gap: 7px; }
+  .cp { display: flex; gap: 8px; font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .cp::before { content: '▸'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+  .concept-qa { margin-top: 14px; }
+  .qa-label { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent4); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .qa-item { background: var(--surface2); border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+  .qa-q { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .qa-a { font-size: 12px; color: var(--muted); line-height: 1.65; }
+  .qa-a strong { color: var(--accent); }
+
+  /* Flashcards */
+  .flashcard-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .fc-filter { display: flex; gap: 6px; flex-wrap: wrap; }
+  .fc-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+  .fc-btn:hover, .fc-btn.active { background: var(--accent2); border-color: var(--accent2); color: #fff; }
+  .fc-count { margin-left: auto; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+  .flashcard-arena { perspective: 1200px; margin-bottom: 20px; }
+  .flashcard { width: 100%; max-width: 700px; margin: 0 auto; min-height: 220px; cursor: pointer; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .fc-face { position: absolute; inset: 0; border-radius: 18px; padding: 32px 36px; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; }
+  .fc-front { background: linear-gradient(135deg, #131926 0%, #1a2338 100%); border: 1px solid var(--border); }
+  .fc-back { background: linear-gradient(135deg, #0d1f1a 0%, #111d2e 100%); border: 1px solid rgba(0,212,170,0.3); transform: rotateY(180deg); }
+  .fc-category { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent2); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+  .fc-question { font-size: 20px; font-weight: 700; line-height: 1.4; color: var(--text); }
+  .fc-hint { font-size: 12px; color: var(--muted); margin-top: 16px; font-family: 'JetBrains Mono', monospace; }
+  .fc-answer-label { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .fc-answer { font-size: 14px; color: #c8d6e8; line-height: 1.7; }
+  .fc-answer strong { color: var(--accent); }
+  .fc-nav { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
+  .fc-nav-btn { padding: 10px 24px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+  .fc-nav-btn:hover { background: var(--surface2); border-color: var(--accent2); }
+  .fc-nav-btn.primary { background: linear-gradient(135deg, var(--accent2), var(--accent)); border: none; color: #fff; }
+  .fc-progress { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 14px; flex-wrap: wrap; }
+  .fc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.3s; cursor: pointer; }
+  .fc-dot.seen { background: var(--accent2); }
+  .fc-dot.current { background: var(--accent); transform: scale(1.3); }
+
+  /* Projects */
+  .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 26px; margin-bottom: 16px; }
+  .proj-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+  .proj-name { font-size: 18px; font-weight: 800; color: var(--text); }
+  .proj-stack { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .stack-tag { padding: 3px 10px; border-radius: 99px; background: var(--surface2); border: 1px solid var(--border); font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+  .proj-section { margin-top: 16px; }
+  .proj-section-title { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--accent4); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .proj-point { display: flex; gap: 8px; font-size: 13px; color: var(--muted); margin-bottom: 7px; line-height: 1.6; }
+  .proj-point::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+  .proj-qa { background: var(--surface2); border-radius: 10px; padding: 14px; margin-top: 8px; }
+  .proj-qa-q { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .proj-qa-a { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .proj-qa-a strong { color: var(--accent); }
+
+  /* Chip colors */
+  .c1 { background: rgba(0,212,170,0.1); color: var(--accent); }
+  .c2 { background: rgba(123,97,255,0.1); color: var(--accent2); }
+  .c3 { background: rgba(255,107,107,0.1); color: var(--accent3); }
+  .c4 { background: rgba(245,166,35,0.1); color: var(--accent4); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+  @media (max-width: 600px) {
+    header { padding: 16px 18px; }
+    .container { padding: 24px 14px; }
+    .nav-tab { font-size: 12px; padding: 8px 14px; }
+    .fc-face { padding: 22px 20px; }
+    .fc-question { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">RP</div>
+      <div>
+        <div class="logo-text">Interview Prep Guide</div>
+        <div class="logo-sub">Romil Patel · Full Stack Engineer</div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap">
+      <span class="progress-label">Flashcards seen: <span id="progress-count">0 / 30</span></span>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <nav class="nav-tabs">
+    <!-- <button class="nav-tab active" onclick="showSection('polish')">✦ Resume Polish</button> -->
+    <button class="nav-tab active" onclick="showSection('concepts')">⬡ Core Concepts</button>
+    <button class="nav-tab" onclick="showSection('flashcards')">⟳ Flashcards</button>
+    <button class="nav-tab" onclick="showSection('projects')">◈ Projects Deep Dive</button>
+    <button class="nav-tab" onclick="showSection('behavioral')">◎ Behavioral</button>
+  </nav>
+
+  <!-- RESUME POLISH -->
+  <!-- <div class="section active" id="section-polish">
+    <div class="section-title">Resume Polish</div>
+    <div class="section-sub">// Suggested improvements + what's already strong</div>
+    <div class="polish-grid">
+      <div class="polish-card good">
+        <span class="polish-tag tag-good">✓ Strong</span>
+        <div class="polish-title">Quantified Impact Throughout</div>
+        <div class="polish-desc">Every bullet has a number: 40% DB optimization, 30% faster deployments, 45% faster response time. This is exactly what interviewers and ATS systems love. <strong>Keep every metric — they're your strongest selling points.</strong></div>
+      </div>
+      <div class="polish-card good">
+        <span class="polish-tag tag-good">✓ Strong</span>
+        <div class="polish-title">Breadth of Cloud & DevOps</div>
+        <div class="polish-desc">AWS Lambda, ECS, S3, SES, CodePipeline, GCP, Azure DevOps, GitHub Actions — showing multi-cloud fluency is rare and impressive for a developer profile. <strong>Be ready to explain real usage for each one.</strong></div>
+      </div>
+      <div class="polish-card improve">
+        <span class="polish-tag tag-improve">→ Polish</span>
+        <div class="polish-title">Summary: Tighten & Personalize</div>
+        <div class="polish-desc">The summary reads like a skills list. Lead with impact and a differentiator.</div>
+        <div class="polish-change">
+          <span class="del">Full Stack Software Engineer with hands-on experience building scalable...</span><br/>
+          <span class="ins">Full Stack Engineer who ships production-grade features at scale — from microservices on AWS to React UIs serving thousands of users. Proven track record cutting response times by 45% and saving 9,000 agent hours monthly.</span>
+        </div>
+      </div>
+      <div class="polish-card improve">
+        <span class="polish-tag tag-improve">→ Polish</span>
+        <div class="polish-title">SPAN-EA Dates Look Future</div>
+        <div class="polish-desc">04/2025–08/2025 is in the future (today is March 2025). This raises flags. If it's a co-op / upcoming role, label it <strong>"Software Developer Co-op (Upcoming)"</strong> or adjust dates to match reality. Recruiters will ask about this immediately.</div>
+      </div>
+      <div class="polish-card improve">
+        <span class="polish-tag tag-improve">→ Polish</span>
+        <div class="polish-title">Action Verb Variety</div>
+        <div class="polish-desc">"Built", "Developed", "Maintained" appear multiple times. Vary with: <strong>Architected, Engineered, Orchestrated, Shipped, Optimized, Automated, Refactored, Designed, Delivered, Spearheaded.</strong></div>
+      </div>
+      <div class="polish-card improve">
+        <span class="polish-tag tag-improve">→ Polish</span>
+        <div class="polish-title">Project Links Are Blank (LINK)</div>
+        <div class="polish-desc">Replace every <strong>"(LINK)"</strong> placeholder with the actual URL before sending. A broken or placeholder link is an immediate red flag to any technical reviewer.</div>
+      </div>
+      <div class="polish-card add">
+        <span class="polish-tag tag-add">+ Add</span>
+        <div class="polish-title">Tech per Project</div>
+        <div class="polish-desc">Add a small tech stack line under each project name, e.g. <strong>React · FastAPI · AWS · GraphQL</strong>. ATS systems and recruiters scan these quickly and it makes your projects pop visually.</div>
+      </div>
+      <div class="polish-card add">
+        <span class="polish-tag tag-add">+ Add</span>
+        <div class="polish-title">Loop Health — Clarify Role</div>
+        <div class="polish-desc">It's unclear if this was a job, freelance, or personal project. Add one line: <strong>"Personal Project / Freelance, 2024"</strong> or similar. The 9,000 agent hours stat is incredible — frame it front and center.</div>
+      </div>
+      <div class="polish-card good">
+        <span class="polish-tag tag-good">✓ Strong</span>
+        <div class="polish-title">Education GPA + Dean's List</div>
+        <div class="polish-desc">3.8 GPA + Dean's List at Humber and 3.7 at GTU is excellent. Good to include both since you're early-career. <strong>Once you have 3+ years of experience, consider removing GPA.</strong></div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- CONCEPTS -->
+  <div class="section" id="section-concepts">
+    <div class="section-title">Core Concepts</div>
+    <div class="section-sub">// Click any card to expand — study all before interviews</div>
+    <div class="concept-grid" id="concept-grid"></div>
+  </div>
+
+  <!-- FLASHCARDS -->
+  <div class="section" id="section-flashcards">
+    <div class="section-title">Flashcards</div>
+    <div class="section-sub">// Click card to reveal answer · Use arrows to navigate</div>
+    <div class="flashcard-controls">
+      <div class="fc-filter">
+        <button class="fc-btn active" onclick="filterCards('all',this)">All</button>
+        <button class="fc-btn" onclick="filterCards('frontend',this)">Frontend</button>
+        <button class="fc-btn" onclick="filterCards('backend',this)">Backend</button>
+        <button class="fc-btn" onclick="filterCards('cloud',this)">Cloud/DevOps</button>
+        <button class="fc-btn" onclick="filterCards('db',this)">Databases</button>
+        <button class="fc-btn" onclick="filterCards('system',this)">System Design</button>
+      </div>
+      <span class="fc-count" id="fc-count">1 / 30</span>
+    </div>
+    <div class="flashcard-arena">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-category" id="fc-cat">Loading...</div>
+          <div class="fc-question" id="fc-q">Loading question...</div>
+          <div class="fc-hint">Click to reveal answer ↓</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-answer-label">Answer</div>
+          <div class="fc-answer" id="fc-a">Loading answer...</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-nav-btn" onclick="prevCard()">← Prev</button>
+      <button class="fc-nav-btn primary" onclick="nextCard()">Next →</button>
+    </div>
+    <div class="fc-progress" id="fc-dots"></div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section" id="section-projects">
+    <div class="section-title">Projects Deep Dive</div>
+    <div class="section-sub">// What to say + likely interview questions for each project</div>
+
+    <div class="project-card">
+      <div class="proj-header">
+        <div>
+          <div class="proj-name">🩺 Loop Health — Claim Support Tool</div>
+          <div class="proj-stack">
+            <span class="stack-tag">BigQuery</span><span class="stack-tag">React</span><span class="stack-tag">Node.js</span><span class="stack-tag">TPA APIs</span><span class="stack-tag">Observability</span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-section">
+        <div class="proj-section-title">How to Explain It (30-second pitch)</div>
+        <div class="proj-point">Built a full-stack internal tool for a health-insurance platform that automated claim status tracking, reducing support agent workload by ~9,000 hours per month.</div>
+        <div class="proj-point">Integrated with 10+ Third Party Administrators (TPAs) via APIs to pull real-time claim data, which cut inbound support tickets by 50%.</div>
+        <div class="proj-point">Set up an observability layer using BigQuery to log events, making debugging significantly faster.</div>
+        <div class="proj-point">Worked across 8 concurrent feature streams simultaneously — meaning you had to manage priorities, avoid breaking shared code, and coordinate merges.</div>
+      </div>
+      <div class="proj-section">
+        <div class="proj-section-title">Likely Interview Questions</div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">How did you calculate the "9,000 agent hours saved"?</div>
+          <div class="proj-qa-a">Measure pre-launch ticket volume × avg handle time, then compare post-launch. If <strong>~5,000 tickets/month at ~1.8 hrs each</strong>, that's 9,000 hrs. Be specific about the baseline and methodology.</div>
+        </div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">What is a TPA and how did you integrate with them?</div>
+          <div class="proj-qa-a"><strong>Third Party Administrators</strong> manage insurance claims on behalf of insurers. Integration was via REST APIs with authentication tokens, polling claim statuses and mapping their data schemas to the internal model.</div>
+        </div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">Why BigQuery for observability instead of something like Datadog?</div>
+          <div class="proj-qa-a">BigQuery allows SQL-based ad hoc analysis over large event volumes at low cost. It's great when the team already uses GCP and wants to run custom queries over historical logs without a separate APM budget.</div>
+        </div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">How did you manage 8 concurrent projects without conflicts?</div>
+          <div class="proj-qa-a">Feature branches per project, regular rebasing from main, clear module separation to avoid cross-project collisions, and daily standups to surface blockers early.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="proj-header">
+        <div>
+          <div class="proj-name">📚 Bookshelf Web App</div>
+          <div class="proj-stack">
+            <span class="stack-tag">Next.js</span><span class="stack-tag">Tailwind</span><span class="stack-tag">shadcn</span><span class="stack-tag">Plotly</span><span class="stack-tag">Google Books API</span><span class="stack-tag">Vercel</span><span class="stack-tag">GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-section">
+        <div class="proj-section-title">How to Explain It</div>
+        <div class="proj-point">A book management and discovery platform that pulls data from the Google Books API for search, metadata, and covers.</div>
+        <div class="proj-point">Includes data visualization via Plotly (e.g. reading stats, genre breakdowns) and potentially prediction features.</div>
+        <div class="proj-point">Built with Next.js App Router, Tailwind for styling, and shadcn/ui component library for consistent design system.</div>
+        <div class="proj-point">Deployed on Vercel with automated CI/CD via GitHub Actions — every push to main triggers a deployment pipeline.</div>
+      </div>
+      <div class="proj-section">
+        <div class="proj-section-title">Likely Interview Questions</div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">Why Next.js over plain React?</div>
+          <div class="proj-qa-a"><strong>Server-side rendering (SSR)</strong> and <strong>Static Site Generation (SSG)</strong> for faster initial loads and better SEO. Also built-in routing (App Router), API routes, and image optimization out of the box.</div>
+        </div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">What is shadcn/ui and why use it over other component libraries?</div>
+          <div class="proj-qa-a"><strong>shadcn/ui</strong> is not a typical npm package — it's a collection of copy-paste components built on Radix UI primitives and styled with Tailwind. You own the code, can customize freely, no version lock-in. Better for projects needing design control.</div>
+        </div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">Walk me through your GitHub Actions CI/CD workflow</div>
+          <div class="proj-qa-a">On push to main: <strong>1)</strong> Checkout code → <strong>2)</strong> Install deps → <strong>3)</strong> Run lint + tests → <strong>4)</strong> Build → <strong>5)</strong> Deploy to Vercel via Vercel CLI or Vercel GitHub integration. Failures at any step block the merge.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="proj-header">
+        <div>
+          <div class="proj-name">✈️ Wory App — Aviation Tool</div>
+          <div class="proj-stack">
+            <span class="stack-tag">React</span><span class="stack-tag">Material UI</span><span class="stack-tag">Context API</span><span class="stack-tag">Python</span><span class="stack-tag">FastAPI</span><span class="stack-tag">GraphQL</span><span class="stack-tag">Docker</span><span class="stack-tag">AWS SES/S3</span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-section">
+        <div class="proj-section-title">How to Explain It</div>
+        <div class="proj-point">A flight-data web application integrating third-party aviation APIs (likely AviationStack or FlightAware) to track and process flight datasets.</div>
+        <div class="proj-point">Backend is Python + FastAPI with a GraphQL layer — meaning clients can query exactly the data they need rather than over-fetching.</div>
+        <div class="proj-point">AWS SES for transactional emails (notifications, alerts), S3 for storing datasets or user assets, CodePipeline for automated builds.</div>
+        <div class="proj-point">Docker containerizes the backend ensuring consistent environments from dev to production.</div>
+      </div>
+      <div class="proj-section">
+        <div class="proj-section-title">Likely Interview Questions</div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">REST vs GraphQL — why did you choose GraphQL here?</div>
+          <div class="proj-qa-a"><strong>GraphQL</strong> lets clients specify exactly which fields they need, reducing over-fetching. Ideal for flight data where different consumers (mobile, web, stakeholder APIs) need different data shapes. REST would require multiple endpoints or send excess data.</div>
+        </div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">What is Context API and when would you use Redux instead?</div>
+          <div class="proj-qa-a"><strong>Context API</strong> is React's built-in solution for sharing state without prop drilling — great for simple/moderate state like user auth or theme. Use <strong>Redux</strong> when you need complex state logic, time-travel debugging, or very large apps where performance optimization (selectors) matters.</div>
+        </div>
+        <div class="proj-qa">
+          <div class="proj-qa-q">How does AWS SES work?</div>
+          <div class="proj-qa-a"><strong>Simple Email Service</strong> — send transactional emails programmatically. You verify a domain, call the SES API (or SDK) with recipient/subject/body, and AWS handles delivery. Used here for sending flight alerts or status notifications to users.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEHAVIORAL -->
+  <div class="section" id="section-behavioral">
+    <div class="section-title">Behavioral Questions</div>
+    <div class="section-sub">// STAR format answers tailored to your resume</div>
+    <div class="concept-grid" id="behavioral-grid"></div>
+  </div>
+</div>
+
+<script>
+// ========== DATA ==========
+const concepts = [
+  {
+    icon: "⚛️", name: "React", cat: "Frontend", color: "c2",
+    desc: "A JavaScript library for building component-based UIs. Uses a virtual DOM to efficiently update only changed parts of the real DOM.",
+    points: [
+      "Component lifecycle: mounting, updating, unmounting",
+      "Hooks: useState, useEffect, useContext, useCallback, useMemo, useRef",
+      "Virtual DOM diffing (reconciliation) via React Fiber",
+      "Controlled vs uncontrolled components",
+      "React.memo, useMemo, useCallback for performance optimization",
+      "Context API for state sharing without prop drilling"
+    ],
+    qa: [
+      { q: "What is the difference between useCallback and useMemo?", a: "<strong>useMemo</strong> memoizes a computed value; <strong>useCallback</strong> memoizes a function reference. Both prevent unnecessary re-renders by returning the same reference if deps haven't changed." },
+      { q: "Explain the React rendering cycle", a: "State/prop change → React schedules re-render → Fiber reconciler diffs new vs old virtual DOM → Only changed DOM nodes are updated (commit phase)." }
+    ]
+  },
+  {
+    icon: "▲", name: "Next.js", cat: "Frontend", color: "c1",
+    desc: "React framework with SSR, SSG, ISR, API routes, file-based routing, and built-in image/font optimization.",
+    points: [
+      "SSR (Server-Side Rendering): HTML generated per-request on server",
+      "SSG (Static Site Generation): HTML pre-built at build time",
+      "ISR (Incremental Static Regeneration): Rebuild pages on a schedule",
+      "App Router (Next 13+): server components by default, layouts, loading states",
+      "API Routes / Route Handlers: serverless functions built-in",
+      "Image optimization: automatic WebP conversion, lazy loading"
+    ],
+    qa: [
+      { q: "When would you use SSR vs SSG?", a: "<strong>SSG</strong>: content rarely changes (marketing pages, docs). <strong>SSR</strong>: content is user-specific or changes frequently (dashboards, feeds). <strong>ISR</strong>: mostly static but needs periodic refresh." },
+      { q: "What are React Server Components?", a: "Components that render exclusively on the server — zero JS sent to client. Can access databases directly, have no state or effects. Great for data-heavy, non-interactive UI." }
+    ]
+  },
+  {
+    icon: "🔷", name: "TypeScript", cat: "Languages", color: "c2",
+    desc: "Typed superset of JavaScript. Catches errors at compile time, improves IDE support, and makes large codebases maintainable.",
+    points: [
+      "Static typing: string, number, boolean, any, unknown, never, void",
+      "Interfaces vs Types: interfaces are extendable, types more flexible (unions, intersections)",
+      "Generics: type-safe reusable functions/components",
+      "Utility types: Partial<T>, Required<T>, Pick<T,K>, Omit<T,K>, Record<K,V>",
+      "Enums, Tuples, Union types (string | number)",
+      "Type narrowing: typeof, instanceof, 'in' guards"
+    ],
+    qa: [
+      { q: "interface vs type in TypeScript?", a: "<strong>interface</strong>: can be extended/merged (declaration merging), best for object shapes. <strong>type</strong>: can express unions, intersections, primitives. In practice, either works — teams pick one and stick to it." },
+      { q: "What is the 'unknown' type vs 'any'?", a: "<strong>any</strong> disables type checking entirely. <strong>unknown</strong> is type-safe — you must narrow the type before using it. Always prefer unknown over any." }
+    ]
+  },
+  {
+    icon: "🟢", name: "Node.js & Express", cat: "Backend", color: "c1",
+    desc: "Node.js is a V8-based JS runtime for the server. Express is a minimal web framework for building APIs.",
+    points: [
+      "Event loop: single-threaded, non-blocking I/O via libuv",
+      "Express middleware chain: req → middleware1 → middleware2 → route handler",
+      "REST API design: resources, HTTP verbs (GET/POST/PUT/PATCH/DELETE)",
+      "Error handling middleware: (err, req, res, next)",
+      "Authentication: JWT tokens, session cookies, OAuth",
+      "Rate limiting, CORS, helmet for security"
+    ],
+    qa: [
+      { q: "Explain the Node.js event loop", a: "Node delegates I/O (file, network) to OS/libuv. The event loop picks up callbacks from the task queue once the call stack is empty. Phases: timers → I/O callbacks → idle → poll → check (setImmediate) → close callbacks." },
+      { q: "How do you handle errors in Express?", a: "Define a 4-param middleware <strong>(err, req, res, next)</strong> at the end of your middleware stack. Async errors need try/catch + next(err) or use express-async-errors package." }
+    ]
+  },
+  {
+    icon: "🐍", name: "Python & FastAPI", cat: "Backend", color: "c4",
+    desc: "FastAPI is a modern Python web framework for building high-performance APIs with automatic OpenAPI docs and type hints.",
+    points: [
+      "Based on Starlette (ASGI) + Pydantic for validation",
+      "Path params, query params, request body with type annotations",
+      "Dependency injection via Depends()",
+      "Async support: async def endpoints, await async DB calls",
+      "Auto-generates Swagger UI at /docs and ReDoc at /redoc",
+      "Pydantic models for request/response validation"
+    ],
+    qa: [
+      { q: "Why FastAPI over Flask?", a: "<strong>FastAPI</strong>: native async support, automatic validation via Pydantic, auto-generated docs, much faster (on par with Node). <strong>Flask</strong>: simpler, sync-first, larger ecosystem. FastAPI is better for modern APIs." },
+      { q: "What is ASGI vs WSGI?", a: "<strong>WSGI</strong>: sync interface (Flask, Django). <strong>ASGI</strong>: async interface supporting WebSockets, long-polling, HTTP/2. FastAPI uses ASGI (via Uvicorn/Gunicorn)." }
+    ]
+  },
+  {
+    icon: "📊", name: "GraphQL", cat: "Backend", color: "c3",
+    desc: "A query language for APIs. Clients specify exactly what data they need. Single endpoint, no over/under-fetching.",
+    points: [
+      "Schema-first: types, queries, mutations, subscriptions",
+      "Resolvers: functions that return data for each field",
+      "N+1 problem: solved with DataLoader (batching + caching)",
+      "Fragments for reusable field sets",
+      "Introspection: clients can query the schema itself",
+      "vs REST: one endpoint, flexible queries, self-documenting"
+    ],
+    qa: [
+      { q: "What is the N+1 problem in GraphQL?", a: "Fetching a list of N items where each triggers 1 more DB query = N+1 queries total. Solved with <strong>DataLoader</strong>: batches all IDs and makes 1 query, then caches results for the request." },
+      { q: "GraphQL mutation vs query?", a: "<strong>Query</strong>: read-only data fetching (like GET). <strong>Mutation</strong>: write operations (like POST/PUT/DELETE). Subscriptions: real-time updates over WebSocket." }
+    ]
+  },
+  {
+    icon: "☁️", name: "AWS Lambda", cat: "Cloud", color: "c4",
+    desc: "Serverless compute — run functions without provisioning servers. Triggered by events (API Gateway, S3, SQS, etc.).",
+    points: [
+      "Event-driven: triggers from API Gateway, S3, SQS, DynamoDB streams, etc.",
+      "Cold start: first invocation takes longer as container spins up",
+      "Execution model: up to 15 min timeout, up to 10GB memory",
+      "Layers: shared dependencies across functions",
+      "IAM roles: each Lambda needs a role defining what it can access",
+      "Pricing: per invocation + duration (GB-seconds)"
+    ],
+    qa: [
+      { q: "How did you use Lambda at MAMO Technolabs?", a: "Implemented microservices as individual Lambda functions behind API Gateway or triggered by SQS. Each service handled one responsibility, scaled independently, and reduced system response time by 45% vs monolithic approach." },
+      { q: "What is a cold start and how do you reduce it?", a: "<strong>Cold start</strong>: Lambda downloads code + starts runtime on first invocation. Mitigations: <strong>Provisioned Concurrency</strong> (keep instances warm), smaller deployment packages, use Node.js/Python (faster than Java), avoid VPC if possible." }
+    ]
+  },
+  {
+    icon: "📦", name: "AWS ECS", cat: "Cloud", color: "c4",
+    desc: "Elastic Container Service — run Docker containers on AWS. Supports Fargate (serverless) and EC2 launch types.",
+    points: [
+      "Task Definition: blueprint for container (image, CPU, memory, env vars)",
+      "Service: keeps desired count of tasks running, integrates with ALB",
+      "Fargate: AWS manages the EC2 instances — no server management",
+      "ECR: Elastic Container Registry — private Docker image registry on AWS",
+      "ECS + ALB: Application Load Balancer routes traffic to healthy containers",
+      "vs Lambda: ECS for long-running processes; Lambda for short event-driven tasks"
+    ],
+    qa: [
+      { q: "Lambda vs ECS — when to use each?", a: "<strong>Lambda</strong>: short event-driven tasks (<15 min), unpredictable traffic, minimal setup. <strong>ECS</strong>: long-running services, need more control, large workloads, custom runtimes. ECS is better for always-on microservices." },
+      { q: "What is Fargate?", a: "Serverless compute for containers. You define Task Definitions (CPU/memory/image), Fargate provisions and manages the underlying EC2 — no cluster management needed." }
+    ]
+  },
+  {
+    icon: "🔄", name: "CI/CD Pipelines", cat: "DevOps", color: "c2",
+    desc: "Continuous Integration/Delivery — automated pipeline from code commit to production deployment.",
+    points: [
+      "CI: automated build, lint, test on every commit/PR",
+      "CD: automated deployment to staging/production after CI passes",
+      "GitHub Actions: YAML-based workflows triggered by events",
+      "Azure DevOps: Pipelines with stages, jobs, steps; integrates with Azure",
+      "AWS CodePipeline: source → build (CodeBuild) → deploy stages",
+      "Key concepts: artifacts, environments, secrets management, approvals"
+    ],
+    qa: [
+      { q: "Walk me through a CI/CD pipeline you built", a: "At SPAN-EA: <strong>1)</strong> Dev pushes to feature branch → <strong>2)</strong> Azure DevOps triggers pipeline → <strong>3)</strong> Install + lint + unit tests → <strong>4)</strong> Build Docker image → <strong>5)</strong> Push to registry → <strong>6)</strong> Deploy to staging → <strong>7)</strong> Manual approval → <strong>8)</strong> Deploy to production. Reduced release time by 30%." },
+      { q: "What are GitHub Actions secrets?", a: "Encrypted environment variables stored in GitHub, injected into workflow steps at runtime. Never hardcode credentials. Access via <strong>${{ secrets.MY_SECRET }}</strong> in YAML." }
+    ]
+  },
+  {
+    icon: "🗄️", name: "MongoDB", cat: "Databases", color: "c1",
+    desc: "NoSQL document database. Stores data as BSON (Binary JSON) documents in collections. Schema-flexible.",
+    points: [
+      "Documents = JSON-like objects; Collections = tables",
+      "Schema-less but use Mongoose (Node.js) for schema enforcement",
+      "Indexing: single, compound, text, geospatial indexes",
+      "Aggregation pipeline: $match, $group, $sort, $lookup (joins)",
+      "Replica sets for high availability; sharding for horizontal scaling",
+      "ACID transactions supported since 4.0 (multi-document)"
+    ],
+    qa: [
+      { q: "MongoDB vs PostgreSQL — when to use each?", a: "<strong>MongoDB</strong>: flexible/evolving schema, hierarchical/nested data, rapid iteration. <strong>PostgreSQL</strong>: structured data, complex joins, strong consistency, financial data, reporting. You've used both — mention you choose based on data shape." },
+      { q: "What is an aggregation pipeline?", a: "A sequence of stages to process documents: <strong>$match</strong> (filter) → <strong>$group</strong> (aggregate) → <strong>$sort</strong> → <strong>$project</strong> (shape output) → <strong>$lookup</strong> (left join another collection)." }
+    ]
+  },
+  {
+    icon: "🐘", name: "PostgreSQL", cat: "Databases", color: "c2",
+    desc: "Powerful open-source relational database. ACID compliant, supports JSON, full-text search, and advanced indexing.",
+    points: [
+      "ACID: Atomicity, Consistency, Isolation, Durability",
+      "Joins: INNER, LEFT, RIGHT, FULL OUTER, CROSS",
+      "Indexes: B-tree (default), Hash, GIN (JSON/array), GiST",
+      "EXPLAIN ANALYZE: inspect query execution plan",
+      "Transactions: BEGIN / COMMIT / ROLLBACK",
+      "Window functions: ROW_NUMBER(), RANK(), LAG(), LEAD() OVER (PARTITION BY...)"
+    ],
+    qa: [
+      { q: "How did you optimize data retrieval by 40%?", a: "Analyzed slow queries with <strong>EXPLAIN ANALYZE</strong>, added composite indexes on frequently filtered columns, rewrote N+1 queries as JOINs, and used connection pooling (pg-pool) to reduce connection overhead." },
+      { q: "What is a database index and when does it hurt performance?", a: "Index = B-tree data structure for fast lookups. Speeds up reads, slows down writes (index must be updated). Avoid indexing columns with low cardinality or on rarely-queried fields. Too many indexes waste storage." }
+    ]
+  },
+  {
+    icon: "🔀", name: "Microservices", cat: "Architecture", color: "c3",
+    desc: "Architectural pattern: break monolith into small, independently deployable services each handling one business domain.",
+    points: [
+      "Each service has its own codebase, database, deployment pipeline",
+      "Communication: REST (sync) or message queues like SQS/Kafka (async)",
+      "API Gateway: single entry point, routes to services",
+      "Service discovery: services find each other dynamically (e.g. ECS service discovery)",
+      "Challenges: distributed tracing, data consistency, network latency, testing complexity",
+      "vs Monolith: more operational complexity but better scalability and team autonomy"
+    ],
+    qa: [
+      { q: "How did microservices reduce response time by 45%?", a: "Breaking a monolith meant each service could scale independently. High-traffic services got more Lambda concurrency or ECS tasks. Also, parallel async calls replaced sequential blocking calls, and each service was optimized individually." },
+      { q: "How do microservices communicate?", a: "<strong>Sync</strong>: REST/gRPC (direct request-response). <strong>Async</strong>: message queues (SQS, Kafka) — service publishes event, others consume. Async is preferred for decoupling; sync for real-time needs." }
+    ]
+  },
+  {
+    icon: "🧪", name: "Testing", cat: "Quality", color: "c1",
+    desc: "Systematic verification that code works correctly. Unit → Integration → E2E testing pyramid.",
+    points: [
+      "Unit tests: test one function/component in isolation (Jest, Vitest)",
+      "Integration tests: test multiple units working together",
+      "E2E tests: simulate real user interactions (Selenium, Playwright, Cypress)",
+      "Postman: manual and automated API testing with collections/environments",
+      "Mocking: replace external dependencies with controlled fakes",
+      "Code coverage: % of lines executed during tests (aim for 70-80%+)"
+    ],
+    qa: [
+      { q: "What is the testing pyramid?", a: "Bottom: many <strong>unit tests</strong> (fast, cheap). Middle: fewer <strong>integration tests</strong>. Top: few <strong>E2E tests</strong> (slow, expensive). Invert this = ice cream cone anti-pattern — too slow and brittle." },
+      { q: "How do you test a REST API in Postman?", a: "Create a Collection of requests with environments (dev/staging/prod). Add <strong>Tests</strong> tab scripts (JavaScript) to assert status codes, response body, response time. Use Collection Runner or Newman (CLI) for CI integration." }
+    ]
+  },
+  {
+    icon: "🏃", name: "Agile & Scrum", cat: "Process", color: "c4",
+    desc: "Iterative software development framework. Short sprints, daily standups, continuous delivery of value.",
+    points: [
+      "Sprint: 1-2 week iteration with defined deliverables",
+      "Ceremonies: Sprint Planning, Daily Standup, Sprint Review, Retrospective",
+      "Artifacts: Product Backlog, Sprint Backlog, Increment",
+      "Roles: Product Owner, Scrum Master, Development Team",
+      "JIRA: backlog management, sprint boards, burndown charts, issue tracking",
+      "User story format: 'As a [user], I want [feature] so that [benefit]'"
+    ],
+    qa: [
+      { q: "Describe your experience in Agile/Scrum", a: "At MAMO Technolabs, participated in 2-week sprints managed in Jira. Daily standups: what I did yesterday, what I'm doing today, any blockers. Sprint planning to estimate stories (story points), retrospectives to improve process." },
+      { q: "What do you do when you can't finish a sprint commitment?", a: "Raise the blocker in standup ASAP. Don't wait until the last day. Discuss with the team — can scope be reduced? Can a teammate help? Move remaining work to next sprint with context documented." }
+    ]
+  },
+  {
+    icon: "🔐", name: "Auth & Security", cat: "Backend", color: "c3",
+    desc: "Securing web applications and APIs. Authentication (who you are) vs Authorization (what you can do).",
+    points: [
+      "JWT: signed token with header.payload.signature — stateless auth",
+      "OAuth 2.0: delegated authorization (Sign in with Google/GitHub)",
+      "AWS Cognito: managed user pools + identity pools, handles JWT issuance",
+      "HTTPS, CORS, CSP headers, rate limiting, input validation",
+      "Password hashing: bcrypt, argon2 — never store plaintext",
+      "OWASP Top 10: SQL injection, XSS, CSRF, broken auth, etc."
+    ],
+    qa: [
+      { q: "How does JWT authentication work?", a: "User logs in → server validates credentials → issues JWT (signed with secret). Client stores token, sends in Authorization: Bearer header on each request. Server verifies signature + expiry. <strong>No session storage needed.</strong>" },
+      { q: "What is AWS Cognito?", a: "Managed auth service. <strong>User Pools</strong>: sign-up/sign-in, MFA, JWT issuance. <strong>Identity Pools</strong>: grant temporary AWS credentials to authenticated users (e.g. direct S3 access). Integrates with API Gateway." }
+    ]
+  },
+  {
+    icon: "🐳", name: "Docker & Containers", cat: "DevOps", color: "c2",
+    desc: "Package apps + dependencies into portable containers that run consistently anywhere.",
+    points: [
+      "Dockerfile: instructions to build an image (FROM, RUN, COPY, EXPOSE, CMD)",
+      "Image vs Container: image = blueprint; container = running instance",
+      "docker-compose: define multi-service apps (app + DB + Redis) in YAML",
+      "Volumes: persist data outside container lifecycle",
+      "Networks: containers communicate via internal Docker networks",
+      "Multi-stage builds: smaller final images by discarding build dependencies"
+    ],
+    qa: [
+      { q: "Why did you use Docker in the Wory App?", a: "Docker ensures the Python/FastAPI backend runs identically in dev, CI, and production. No 'works on my machine' issues. Also simplifies deployment to ECS — just push updated image to ECR, ECS pulls and restarts." },
+      { q: "What is a multi-stage Dockerfile?", a: "Use multiple FROM stages: stage 1 (builder) compiles code; stage 2 (runner) copies only the compiled artifact. Final image is smaller and has no build tools. Critical for production image security and size." }
+    ]
+  }
+];
+
+const flashcards = [
+  { cat: "frontend", q: "What is the Virtual DOM and why does React use it?", a: "The <strong>Virtual DOM</strong> is a lightweight in-memory representation of the real DOM. React compares the new virtual DOM with the previous one (diffing via the Fiber reconciler) and only updates the changed real DOM nodes — avoiding expensive full re-renders." },
+  { cat: "frontend", q: "Explain React's useEffect hook and its dependency array", a: "<strong>useEffect(fn, deps)</strong> runs side effects after render. Empty array []: run once on mount. With deps: run when any dep changes. No array: run after every render. Cleanup: return a function to unsubscribe/clear timers." },
+  { cat: "frontend", q: "What is SSR and how does Next.js implement it?", a: "<strong>Server-Side Rendering</strong>: HTML is generated on the server per request and sent to the client. In Next.js, use <strong>getServerSideProps</strong> (Pages Router) or server components (App Router). Better for SEO and fast initial load." },
+  { cat: "frontend", q: "What is Tailwind CSS and how does it differ from traditional CSS?", a: "<strong>Utility-first CSS</strong>: apply pre-built classes directly in HTML (e.g. flex, pt-4, text-xl). No context switching to CSS files. JIT compiler generates only used styles = tiny bundle. Promotes consistency via a design system." },
+  { cat: "frontend", q: "What is shadcn/ui and how does it differ from MUI or Ant Design?", a: "shadcn/ui copies component source code into your project (via CLI) rather than being an npm dependency. You own the code and can customize freely. Built on Radix UI (accessible primitives) + Tailwind. No version lock-in." },
+  { cat: "backend", q: "Explain REST API design principles", a: "<strong>REST</strong>: stateless, client-server, uniform interface. Use nouns for resources (/users, /orders). HTTP verbs: GET (read), POST (create), PUT (replace), PATCH (update), DELETE. Return appropriate status codes: 200, 201, 400, 401, 404, 500." },
+  { cat: "backend", q: "What is the difference between synchronous and asynchronous code in Node.js?", a: "<strong>Sync</strong>: blocks the event loop until complete (avoid for I/O). <strong>Async</strong>: non-blocking — callback, Promise, or async/await. Node.js is single-threaded; async I/O lets it handle many concurrent requests without threads." },
+  { cat: "backend", q: "What are Promises and async/await in JavaScript?", a: "A <strong>Promise</strong> represents a future value (pending → fulfilled/rejected). <strong>async/await</strong> is syntactic sugar over promises — makes async code look synchronous. Error handling: try/catch around await calls. Behind the scenes: still promises." },
+  { cat: "backend", q: "What is middleware in Express.js?", a: "Functions that execute in sequence during request processing: <strong>(req, res, next)</strong>. Call next() to pass to the next middleware. Used for auth, logging, CORS, body parsing. Error middleware has 4 params: (err, req, res, next)." },
+  { cat: "backend", q: "REST vs GraphQL — key differences?", a: "<strong>REST</strong>: multiple endpoints, fixed data shapes, may over/under-fetch. <strong>GraphQL</strong>: single endpoint, client specifies exact fields needed, self-documenting schema, flexible for different clients. GraphQL adds complexity; REST is simpler for straightforward APIs." },
+  { cat: "cloud", q: "What is serverless computing and what are its trade-offs?", a: "<strong>Serverless</strong>: no server management; functions run on demand and scale automatically. ✅ No idle cost, auto-scale, no infra management. ❌ Cold starts, max execution time (15 min for Lambda), harder to debug, vendor lock-in." },
+  { cat: "cloud", q: "Explain AWS S3 and common use cases", a: "<strong>Simple Storage Service</strong>: object storage for files of any type. Use cases: static asset hosting, user uploads, backups, data lake input, static website hosting. Features: versioning, lifecycle policies, presigned URLs for secure temp access." },
+  { cat: "cloud", q: "What is AWS CodePipeline?", a: "Fully managed CI/CD orchestration service. Stages: <strong>Source</strong> (GitHub/CodeCommit) → <strong>Build</strong> (CodeBuild: compile, test, Docker build) → <strong>Deploy</strong> (CodeDeploy, ECS, Lambda). Visual pipeline with status per stage." },
+  { cat: "cloud", q: "What is the difference between horizontal and vertical scaling?", a: "<strong>Vertical</strong>: add more CPU/RAM to one server (scale up). Has limits. <strong>Horizontal</strong>: add more servers/instances (scale out). AWS microservices/Lambda scale horizontally automatically. Horizontal is preferred for modern cloud architectures." },
+  { cat: "cloud", q: "What is a CDN and why use it?", a: "<strong>Content Delivery Network</strong>: distributed servers that cache content close to users. Reduces latency by serving assets from nearest edge location. AWS CloudFront, Vercel Edge Network. Critical for global apps — cuts load time dramatically." },
+  { cat: "db", q: "Explain ACID properties in databases", a: "<strong>Atomicity</strong>: transaction succeeds completely or not at all. <strong>Consistency</strong>: data always valid per rules. <strong>Isolation</strong>: concurrent transactions don't interfere. <strong>Durability</strong>: committed data survives crashes. PostgreSQL fully ACID; MongoDB ACID since 4.0." },
+  { cat: "db", q: "What is database indexing and when does it hurt?", a: "An <strong>index</strong> (B-tree) lets the DB find rows without full table scan — O(log n) vs O(n). Speeds up reads but slows writes (index updated on insert/update/delete). Don't index low-cardinality columns or columns rarely used in WHERE/JOIN." },
+  { cat: "db", q: "SQL vs NoSQL — when to choose each?", a: "<strong>SQL</strong> (PostgreSQL, MySQL): structured data, complex joins, ACID transactions, reporting. <strong>NoSQL</strong> (MongoDB): flexible/evolving schema, nested documents, high write throughput, horizontal scale. Use case determines the choice." },
+  { cat: "db", q: "What is a database join? Explain INNER vs LEFT JOIN", a: "<strong>INNER JOIN</strong>: returns only rows with matches in both tables. <strong>LEFT JOIN</strong>: returns all rows from left table + matched rows from right (NULL if no match). <strong>RIGHT JOIN</strong>: opposite. <strong>FULL OUTER</strong>: all rows from both." },
+  { cat: "db", q: "What is BigQuery and how did you use it?", a: "<strong>Google BigQuery</strong>: serverless data warehouse for analytics at massive scale. Used in Loop Health for an observability/logging layer — ingest app events, query with SQL to debug issues, analyze patterns across millions of events without managing infra." },
+  { cat: "system", q: "What is a microservices architecture?", a: "Application split into small, independently deployable services each responsible for one domain. Each has its own DB and deployment. Services communicate via REST or message queues. Benefits: independent scaling, tech flexibility, team autonomy. Costs: operational complexity." },
+  { cat: "system", q: "What is an API Gateway?", a: "Single entry point for client requests that routes to appropriate microservices. Handles: auth/AuthZ, rate limiting, SSL termination, load balancing, request transformation. AWS API Gateway integrates natively with Lambda and ECS." },
+  { cat: "system", q: "Explain load balancing", a: "Distributes incoming requests across multiple servers to prevent any one from being overwhelmed. Algorithms: round-robin, least connections, IP hash. AWS ALB (Application Load Balancer) routes HTTP/HTTPS traffic to healthy ECS tasks or EC2 instances." },
+  { cat: "system", q: "What is caching and what strategies exist?", a: "<strong>Cache</strong>: store expensive computation/query results for fast repeated access. Strategies: <strong>Cache-aside</strong> (app checks cache first), <strong>Write-through</strong> (write to cache + DB), <strong>TTL-based expiry</strong>. Tools: Redis, Memcached, browser cache, CDN." },
+  { cat: "system", q: "What is a message queue? Why use SQS?", a: "<strong>Message queue</strong>: async communication between services. Producer sends message; consumer processes at its own pace. <strong>AWS SQS</strong>: managed queue, at-least-once delivery, dead letter queues for failed messages. Decouples services and handles traffic spikes." },
+  { cat: "frontend", q: "What is the Context API in React?", a: "Built-in state sharing mechanism — avoids prop drilling by providing state to any nested component via <strong>createContext + Provider</strong>. Best for global state: theme, auth user, locale. For complex state logic, consider Zustand or Redux." },
+  { cat: "backend", q: "What is JWT and how is it structured?", a: "JSON Web Token: <strong>header</strong>.payload.signature. Header: alg + type. Payload: claims (userId, role, exp). Signature: HMAC(base64(header)+'.'+base64(payload), secret). Server verifies signature; no DB lookup needed. Stateless auth." },
+  { cat: "cloud", q: "What is IaC (Infrastructure as Code)?", a: "Define cloud infrastructure in code (YAML/JSON/HCL) rather than manual console clicks. Tools: <strong>AWS CloudFormation</strong>, Terraform, AWS CDK. Benefits: version control, reproducible environments, automated provisioning, no config drift." },
+  { cat: "system", q: "How would you design a URL shortener?", a: "<strong>API</strong>: POST /shorten → generate 6-char hash → store original:short in Redis+DB. GET /{code} → lookup → 301 redirect. Scale: CDN for read-heavy traffic, Redis cache for hot URLs, horizontal DB replicas. Analytics: async via SQS." },
+  { cat: "db", q: "What is connection pooling?", a: "Maintains a pool of open DB connections to reuse rather than open/close per request (expensive). Tools: <strong>pg-pool</strong> (PostgreSQL), Mongoose connection pooling (MongoDB). Prevents connection exhaustion under high load. Critical for serverless + Lambda." },
+  { cat: "system", q: "What is observability? Logs vs Metrics vs Traces", a: "<strong>Logs</strong>: timestamped event records (what happened). <strong>Metrics</strong>: numerical measurements over time (CPU, req/s). <strong>Traces</strong>: end-to-end request journey across services. Together they give full visibility. You used BigQuery for logs in Loop Health." }
+];
+
+const behaviorals = [
+  {
+    icon: "⚡", name: "Biggest Technical Challenge", cat: "Problem Solving", color: "c3",
+    desc: "Use STAR: Situation → Task → Action → Result",
+    points: [],
+    qa: [
+      { q: "Tell me about a technical challenge you solved", a: "<strong>S:</strong> At MAMO Technolabs, the monolithic backend was causing 2-3 second response times under load. <strong>T:</strong> Needed to improve performance without a full rewrite. <strong>A:</strong> Proposed migrating critical paths to AWS Lambda + ECS microservices, implemented async messaging with SQS for non-critical operations. <strong>R:</strong> Response time reduced by 45%, system handles 3× previous load." },
+    ]
+  },
+  {
+    icon: "🤝", name: "Cross-functional Collaboration", cat: "Teamwork", color: "c2",
+    desc: "Show you work well with designers, PMs, QA, backend/frontend counterparts",
+    points: [],
+    qa: [
+      { q: "Give an example of working with a non-technical stakeholder", a: "<strong>S:</strong> At SPAN-EA, a designer had UI specs that were technically complex to implement on the timeline. <strong>T:</strong> Bridge the gap without compromising design quality. <strong>A:</strong> Scheduled a 30-min sync, proposed alternative component structure that achieved the same UX with 40% less dev time, showed a quick prototype. <strong>R:</strong> Designer agreed, shipped on time, 35% performance improvement over old UI." },
+    ]
+  },
+  {
+    icon: "📈", name: "Ownership & Initiative", cat: "Leadership", color: "c1",
+    desc: "Show you go beyond assigned tasks",
+    points: [],
+    qa: [
+      { q: "Tell me about a time you improved a process without being asked", a: "<strong>S:</strong> Deployments at MAMO were manual and inconsistent — different team members did steps differently. <strong>T:</strong> Not explicitly my job, but I saw the risk. <strong>A:</strong> Proposed and built a CI/CD pipeline with Azure DevOps: automated lint, test, build, deploy stages. Documented it and trained the team. <strong>R:</strong> Release times cut by 30%, zero deployment-related incidents in 3 months." },
+    ]
+  },
+  {
+    icon: "🎯", name: "Why This Role?", cat: "Motivation", color: "c4",
+    desc: "Tailor this to the company but keep the core genuine",
+    points: [],
+    qa: [
+      { q: "Why are you interested in this position?", a: "I've been building full-stack systems with React, Node.js, and AWS for 2+ years and I'm looking for a role where I can deepen that expertise while taking on more architectural ownership. What excites me specifically about [Company] is [specific product/tech/mission]. My background building microservices and CI/CD pipelines aligns well with what your team is working on." },
+    ]
+  },
+  {
+    icon: "⏰", name: "Handling Deadlines", cat: "Delivery", color: "c3",
+    desc: "Show you deliver under pressure without cutting corners",
+    points: [],
+    qa: [
+      { q: "Tell me about a time you had to deliver under a tight deadline", a: "<strong>S:</strong> In Loop Health, had 8 concurrent project streams with a hard demo deadline. <strong>T:</strong> Ship core features without breaking existing functionality. <strong>A:</strong> Triaged by impact, parallelized work using feature branches, wrote targeted integration tests for critical paths rather than full coverage. <strong>R:</strong> Shipped on time, all 8 features demonstrated successfully, code quality maintained." },
+    ]
+  },
+  {
+    icon: "🔍", name: "Handling Failure / Mistakes", cat: "Growth", color: "c2",
+    desc: "Be honest, show accountability and learning",
+    points: [],
+    qa: [
+      { q: "Tell me about a mistake you made and what you learned", a: "Early in my career I pushed a DB schema change to production without a migration rollback plan. The deploy caused a brief outage. I <strong>immediately rolled back</strong>, communicated transparently with the team, and then introduced a rule: every schema change must have a tested rollback script before deploy. Zero such incidents since." },
+    ]
+  }
+];
+
+// ========== STATE ==========
+let currentFilter = 'all';
+let filteredCards = [];
+let cardIndex = 0;
+let seenCards = new Set();
+let isFlipped = false;
+
+// ========== INIT ==========
+function init() {
+  renderConcepts();
+  renderBehaviorals();
+  filterCards('all', document.querySelector('.fc-btn.active'));
+}
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ========== CONCEPTS ==========
+function renderConcepts() {
+  const grid = document.getElementById('concept-grid');
+  grid.innerHTML = concepts.map((c, i) => `
+    <div class="concept-card" onclick="toggleConcept(${i}, this)">
+      <div class="concept-header">
+        <div class="concept-header-left">
+          <div class="concept-icon ${c.color}">${c.icon}</div>
+          <div>
+            <div class="concept-name">${c.name}</div>
+            <div class="concept-cat">${c.cat}</div>
+          </div>
+        </div>
+        <div class="concept-chevron">▾</div>
+      </div>
+      <div class="concept-body">
+        <div class="concept-desc">${c.desc}</div>
+        <div class="concept-points">${c.points.map(p => `<div class="cp">${p}</div>`).join('')}</div>
+        <div class="concept-qa">
+          <div class="qa-label">Interview Questions</div>
+          ${c.qa.map(q => `
+            <div class="qa-item">
+              <div class="qa-q">Q: ${q.q}</div>
+              <div class="qa-a">A: ${q.a}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleConcept(i, el) {
+  el.classList.toggle('open');
+}
+
+// ========== BEHAVIORALS ==========
+function renderBehaviorals() {
+  const grid = document.getElementById('behavioral-grid');
+  grid.innerHTML = behaviorals.map((c, i) => `
+    <div class="concept-card" onclick="toggleConcept(${i}, this)">
+      <div class="concept-header">
+        <div class="concept-header-left">
+          <div class="concept-icon ${c.color}">${c.icon}</div>
+          <div>
+            <div class="concept-name">${c.name}</div>
+            <div class="concept-cat">${c.cat}</div>
+          </div>
+        </div>
+        <div class="concept-chevron">▾</div>
+      </div>
+      <div class="concept-body">
+        <div class="concept-desc">${c.desc}</div>
+        <div class="concept-qa" style="margin-top:12px">
+          <div class="qa-label">Sample Answer (STAR)</div>
+          ${c.qa.map(q => `
+            <div class="qa-item">
+              <div class="qa-q">Q: ${q.q}</div>
+              <div class="qa-a">A: ${q.a}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ========== FLASHCARDS ==========
+function filterCards(filter, btn) {
+  document.querySelectorAll('.fc-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = filter;
+  filteredCards = filter === 'all' ? flashcards : flashcards.filter(c => c.cat === filter);
+  cardIndex = 0;
+  isFlipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  renderDots();
+  showCard();
+}
+
+function showCard() {
+  if (!filteredCards.length) return;
+  const card = filteredCards[cardIndex];
+  document.getElementById('fc-cat').textContent = card.cat.toUpperCase();
+  document.getElementById('fc-q').textContent = card.q;
+  document.getElementById('fc-a').innerHTML = card.a;
+  document.getElementById('fc-count').textContent = `${cardIndex + 1} / ${filteredCards.length}`;
+  updateDots();
+  updateProgress();
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped');
+  if (isFlipped) {
+    const globalIndex = flashcards.indexOf(filteredCards[cardIndex]);
+    seenCards.add(globalIndex);
+    updateProgress();
+  }
+}
+
+function nextCard() {
+  cardIndex = (cardIndex + 1) % filteredCards.length;
+  isFlipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  showCard();
+}
+
+function prevCard() {
+  cardIndex = (cardIndex - 1 + filteredCards.length) % filteredCards.length;
+  isFlipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  showCard();
+}
+
+function renderDots() {
+  const dots = document.getElementById('fc-dots');
+  dots.innerHTML = filteredCards.map((_, i) => `<div class="fc-dot" onclick="goToCard(${i})"></div>`).join('');
+}
+
+function updateDots() {
+  const dots = document.querySelectorAll('.fc-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('current', 'seen');
+    if (i === cardIndex) d.classList.add('current');
+    else {
+      const globalIndex = flashcards.indexOf(filteredCards[i]);
+      if (seenCards.has(globalIndex)) d.classList.add('seen');
+    }
+  });
+}
+
+function goToCard(i) {
+  cardIndex = i;
+  isFlipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  showCard();
+}
+
+function updateProgress() {
+  const total = flashcards.length;
+  const seen = seenCards.size;
+  document.getElementById('progress-count').textContent = `${seen} / ${total}`;
+  document.getElementById('prog-fill').style.width = `${(seen / total) * 100}%`;
+}
+
+init();
+</script>
+</body>
+</html>
